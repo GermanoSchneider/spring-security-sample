@@ -16,6 +16,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 
@@ -59,4 +60,39 @@ class UserControllerTest {
                 .andExpect(MockMvcResultMatchers.content().json(expectedResponse));
     }
 
+    @Test
+    @WithMockUser(username = "Mary", password = "4321")
+    void should_get_all_users_with_success() throws Exception {
+
+        User john = User.builder()
+                .id(1L)
+                .name("John")
+                .password("1234")
+                .city("Vancouver")
+                .birthday(LocalDate.of(1998, 10, 8))
+                .build();
+
+        User mary = User.builder()
+                .id(2L)
+                .name("Mary")
+                .password("4321")
+                .city("Seattle")
+                .birthday(LocalDate.of(1995, 5, 10))
+                .build();
+
+        Mockito.doReturn(List.of(john, mary))
+                .when(userRepository)
+                .findAll();
+
+        var expectedResponse = objectMapper.writeValueAsString(
+                List.of(
+                        new UserDTO(john.getName(), john.getCity(), john.getAge()),
+                        new UserDTO(mary.getName(), mary.getCity(), mary.getAge())
+                )
+        );
+
+        mockMvc.perform(get("/users"))
+                .andExpect(MockMvcResultMatchers.status().is2xxSuccessful())
+                .andExpect(MockMvcResultMatchers.content().json(expectedResponse));
+    }
 }
