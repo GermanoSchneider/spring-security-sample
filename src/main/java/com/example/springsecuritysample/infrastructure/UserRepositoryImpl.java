@@ -5,6 +5,9 @@ import com.example.springsecuritysample.domain.UserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
 
+import java.util.Collection;
+import java.util.List;
+
 @Repository
 class UserRepositoryImpl implements UserRepository {
 
@@ -23,6 +26,16 @@ class UserRepositoryImpl implements UserRepository {
        var entity = userJpaRepository.findByName(username);
 
        return UserMapper.from(entity);
+    }
+
+    @Override
+    public Collection<User> findAll() {
+
+        return ((List<UserEntity>) userJpaRepository
+                .findAll())
+                .stream()
+                .map(UserMapper::from)
+                .toList();
     }
 
     @Override

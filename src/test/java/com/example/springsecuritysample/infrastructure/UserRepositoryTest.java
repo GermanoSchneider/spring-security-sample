@@ -14,6 +14,7 @@ import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.annotation.DirtiesContext.MethodMode;
 
 import java.time.LocalDate;
+import java.util.Collection;
 
 import static org.mockito.Mockito.verify;
 
@@ -56,6 +57,36 @@ class UserRepositoryTest {
         Assertions.assertEquals(newUser.getBirthday(), user.getBirthday());
 
         verify(userJpaRepository).findByName(newUser.getName());
+    }
+
+    @Test
+    @DirtiesContext(methodMode = MethodMode.AFTER_METHOD)
+    void should_find_all_users_with_success() {
+
+        UserEntity firstUserEntity = new UserEntity(
+                null,
+                "John",
+                passwordEncoder.encode("1234"),
+                "Vancouver",
+                LocalDate.of(1998, 10, 8)
+        );
+
+        UserEntity secondUserEntity = new UserEntity(
+                null,
+                "Mary",
+                passwordEncoder.encode("4321"),
+                "Seattle",
+                LocalDate.of(1995, 5, 10)
+        );
+
+        entityManager.persist(firstUserEntity);
+        entityManager.persist(secondUserEntity);
+
+        Collection<User> users = userRepository.findAll();
+
+        org.assertj.core.api.Assertions.assertThat(users).hasSize(2);
+
+        verify(userJpaRepository).findAll();
     }
 
     @Test
