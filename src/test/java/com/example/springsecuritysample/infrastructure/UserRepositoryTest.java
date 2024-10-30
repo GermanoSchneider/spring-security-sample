@@ -1,5 +1,6 @@
 package com.example.springsecuritysample.infrastructure;
 
+import com.example.springsecuritysample.domain.Role;
 import com.example.springsecuritysample.domain.User;
 import com.example.springsecuritysample.domain.UserRepository;
 import org.junit.jupiter.api.Assertions;
@@ -9,6 +10,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.context.annotation.Import;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.annotation.DirtiesContext.MethodMode;
@@ -19,7 +21,7 @@ import java.util.Collection;
 import static org.mockito.Mockito.verify;
 
 @DataJpaTest
-@Import({SecurityConfig.class, UserRepositoryImpl.class})
+@Import({BCryptPasswordEncoder.class, UserRepositoryImpl.class})
 class UserRepositoryTest {
 
     @Autowired
@@ -43,7 +45,8 @@ class UserRepositoryTest {
                 "John",
                 passwordEncoder.encode("1234"),
                 "Vancouver",
-                LocalDate.of(1998, 10, 8)
+                LocalDate.of(1998, 10, 8),
+                Role.USER
         );
 
         UserEntity newUser = entityManager.persist(entity);
@@ -68,7 +71,8 @@ class UserRepositoryTest {
                 "John",
                 passwordEncoder.encode("1234"),
                 "Vancouver",
-                LocalDate.of(1998, 10, 8)
+                LocalDate.of(1998, 10, 8),
+                Role.USER
         );
 
         UserEntity secondUserEntity = new UserEntity(
@@ -76,7 +80,8 @@ class UserRepositoryTest {
                 "Mary",
                 passwordEncoder.encode("4321"),
                 "Seattle",
-                LocalDate.of(1995, 5, 10)
+                LocalDate.of(1995, 5, 10),
+                Role.ADMIN
         );
 
         entityManager.persist(firstUserEntity);
@@ -99,6 +104,7 @@ class UserRepositoryTest {
                 .password("1234")
                 .city("Vancouver")
                 .birthday(LocalDate.of(1998, 10, 8))
+                .role(Role.USER)
                 .build();
 
         User newUser = userRepository.save(user);

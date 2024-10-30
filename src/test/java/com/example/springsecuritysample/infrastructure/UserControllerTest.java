@@ -1,5 +1,6 @@
 package com.example.springsecuritysample.infrastructure;
 
+import com.example.springsecuritysample.domain.Role;
 import com.example.springsecuritysample.domain.User;
 import com.example.springsecuritysample.domain.UserRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -43,6 +44,7 @@ class UserControllerTest {
                 .password("1234")
                 .city("Vancouver")
                 .birthday(LocalDate.of(1998, 10, 8))
+                .role(Role.USER)
                 .build();
 
         Mockito.doReturn(user)
@@ -68,6 +70,7 @@ class UserControllerTest {
                 .password("1234")
                 .city("Vancouver")
                 .birthday(LocalDate.of(1998, 10, 8))
+                .role(Role.USER)
                 .build();
 
         User mary = User.builder()
@@ -76,6 +79,7 @@ class UserControllerTest {
                 .password("4321")
                 .city("Seattle")
                 .birthday(LocalDate.of(1995, 5, 10))
+                .role(Role.ADMIN)
                 .build();
 
         Mockito.doReturn(List.of(john, mary))

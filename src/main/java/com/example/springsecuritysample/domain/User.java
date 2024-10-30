@@ -27,6 +27,9 @@ public class User {
     @NotNull(message = "should not be null")
     LocalDate birthday;
 
+    @NotNull(message = "should not be null")
+    Role role;
+
     public int getAge() {
         return LocalDate.now().getYear() - birthday.getYear();
     }
@@ -35,7 +38,7 @@ public class User {
 
         public User build() {
 
-            var user = new User(id, name, password, city, birthday);
+            var user = new User(id, name, password, city, birthday, role);
 
             validate(user);
 

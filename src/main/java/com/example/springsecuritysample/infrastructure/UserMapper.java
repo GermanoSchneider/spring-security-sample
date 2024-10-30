@@ -11,7 +11,8 @@ class UserMapper {
                 user.getName(),
                 user.getPassword(),
                 user.getCity(),
-                user.getBirthday()
+                user.getBirthday(),
+                user.getRole()
         );
     }
 
@@ -23,6 +24,7 @@ class UserMapper {
                 .password(userEntity.getPassword())
                 .city(userEntity.getCity())
                 .birthday(userEntity.getBirthday())
+                .role(userEntity.getRole())
                 .build();
     }
 }

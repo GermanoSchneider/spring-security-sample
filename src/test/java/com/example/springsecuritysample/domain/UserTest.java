@@ -48,6 +48,14 @@ class UserTest {
     }
 
     @Test
+    void should_fail_when_trying_to_build_user_without_role() {
+
+        var exception = assertThrows(ConstraintViolationException.class, () -> user().role(null).build());
+
+        assertEquals("role: should not be null", exception.getMessage());
+    }
+
+    @Test
     void should_get_the_users_age() {
 
         assertEquals(47, user().build().getAge());
@@ -60,6 +68,7 @@ class UserTest {
                 .name("John")
                 .password("1234")
                 .city("Vancouver")
+                .role(Role.USER)
                 .birthday(LocalDate.of(1977, 10, 24));
     }
 

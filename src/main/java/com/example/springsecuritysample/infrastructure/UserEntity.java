@@ -1,5 +1,6 @@
 package com.example.springsecuritysample.infrastructure;
 
+import com.example.springsecuritysample.domain.Role;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -29,4 +30,8 @@ class UserEntity {
 
     @Column(nullable = false)
     private LocalDate birthday;
+
+    @Column(nullable = false)
+    @Enumerated(EnumType.ORDINAL)
+    private Role role;
 }
