@@ -55,7 +55,9 @@ class UserTest {
 
     private User.UserBuilder user() {
 
-        return User.builder().name("John")
+        return User.builder()
+                .id(1L)
+                .name("John")
                 .password("1234")
                 .city("Vancouver")
                 .birthday(LocalDate.of(1977, 10, 24));

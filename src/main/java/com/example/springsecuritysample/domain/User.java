@@ -10,8 +10,10 @@ import java.time.LocalDate;
 import static com.example.springsecuritysample.domain.ConstraintValidator.validate;
 
 @Value
-@Builder
+@Builder(toBuilder = true)
 public class User {
+
+    Long id;
 
     @NotBlank(message = "should not be blank")
     String name;
@@ -33,7 +35,7 @@ public class User {
 
         public User build() {
 
-            var user = new User(name, password, city, birthday);
+            var user = new User(id, name, password, city, birthday);
 
             validate(user);
 
