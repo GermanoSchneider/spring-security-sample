@@ -12,7 +12,7 @@ import org.springframework.security.web.SecurityFilterChain;
 class SecurityConfig {
 
     @Bean
-    SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    SecurityFilterChain securityFilterChain(HttpSecurity http, DatabaseUserDetails databaseUserDetails) throws Exception {
 
         http.authorizeHttpRequests(auth ->
                 auth.requestMatchers("/user/info").hasAnyRole("USER", "ADMIN")
@@ -20,6 +20,7 @@ class SecurityConfig {
         );
 
         http.httpBasic(Customizer.withDefaults());
+        http.userDetailsService(databaseUserDetails);
 
         return http.build();
     }
