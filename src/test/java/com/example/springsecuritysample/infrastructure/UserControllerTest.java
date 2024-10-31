@@ -2,7 +2,7 @@ package com.example.springsecuritysample.infrastructure;
 
 import com.example.springsecuritysample.domain.Role;
 import com.example.springsecuritysample.domain.User;
-import com.example.springsecuritysample.domain.UserRepository;
+import com.example.springsecuritysample.domain.UserService;
 import com.example.springsecuritysample.infrastructure.security.SecurityTestConfig;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
@@ -30,7 +30,7 @@ class UserControllerTest {
     private MockMvc mockMvc;
 
     @MockBean
-    private UserRepository userRepository;
+    private UserService userService;
 
     private final ObjectMapper objectMapper =
             new ObjectMapper()
@@ -51,7 +51,7 @@ class UserControllerTest {
                 .build();
 
         Mockito.doReturn(user)
-                .when(userRepository)
+                .when(userService)
                 .findBy(user.getName());
 
         var expectedResponse = objectMapper.writeValueAsString(
@@ -86,7 +86,7 @@ class UserControllerTest {
                 .build();
 
         Mockito.doReturn(List.of(john, mary))
-                .when(userRepository)
+                .when(userService)
                 .findAll();
 
         var expectedResponse = objectMapper.writeValueAsString(
