@@ -10,10 +10,10 @@ import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 
 @TestConfiguration
 @Import(SecurityConfig.class)
-class SecurityTestConfig {
+public class SecurityTestConfig {
 
     @Bean
-    InMemoryUserDetailsManager userDetailsManager(PasswordEncoder passwordEncoder) {
+    public InMemoryUserDetailsManager userDetailsService(PasswordEncoder passwordEncoder) {
 
         UserDetails user = User.withUsername("user")
                 .password(passwordEncoder.encode("user"))

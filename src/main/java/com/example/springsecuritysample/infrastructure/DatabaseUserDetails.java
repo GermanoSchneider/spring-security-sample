@@ -2,13 +2,11 @@ package com.example.springsecuritysample.infrastructure;
 
 import com.example.springsecuritysample.domain.User;
 import com.example.springsecuritysample.domain.UserRepository;
-import org.springframework.context.annotation.Primary;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
-@Primary
 @Component
 class DatabaseUserDetails implements UserDetailsService {
 
