@@ -14,6 +14,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.annotation.DirtiesContext.MethodMode;
+import org.springframework.test.context.ActiveProfiles;
 
 import java.time.LocalDate;
 import java.util.Collection;
@@ -21,6 +22,7 @@ import java.util.Collection;
 import static org.mockito.Mockito.verify;
 
 @DataJpaTest
+@ActiveProfiles("test")
 @Import({BCryptPasswordEncoder.class, UserRepositoryImpl.class})
 class UserRepositoryTest {
 
@@ -68,7 +70,7 @@ class UserRepositoryTest {
 
         UserEntity firstUserEntity = new UserEntity(
                 null,
-                "John",
+                "Steve",
                 passwordEncoder.encode("1234"),
                 "Vancouver",
                 LocalDate.of(1998, 10, 8),
@@ -100,7 +102,7 @@ class UserRepositoryTest {
 
         User user = User.builder()
                 .id(null)
-                .name("John")
+                .name("Max")
                 .password("1234")
                 .city("Vancouver")
                 .birthday(LocalDate.of(1998, 10, 8))

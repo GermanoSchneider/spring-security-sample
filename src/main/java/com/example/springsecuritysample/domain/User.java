@@ -2,15 +2,18 @@ package com.example.springsecuritysample.domain;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Value;
 
 import java.time.LocalDate;
 
 import static com.example.springsecuritysample.domain.ConstraintValidator.validate;
+import static lombok.AccessLevel.PRIVATE;
 
 @Value
 @Builder(toBuilder = true)
+@AllArgsConstructor(access = PRIVATE)
 public class User {
 
     Long id;
