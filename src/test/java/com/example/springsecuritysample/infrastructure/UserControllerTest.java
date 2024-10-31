@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
@@ -21,6 +22,7 @@ import java.util.List;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 
 @WebMvcTest(controllers = UserController.class)
+@ContextConfiguration(classes = SecurityTestConfig.class)
 class UserControllerTest {
 
     @Autowired
@@ -35,7 +37,7 @@ class UserControllerTest {
                     .registerModule(new Jdk8Module());
 
     @Test
-    @WithMockUser(username = "John", password = "1234")
+    @WithMockUser(username = "John", roles = {"USER"})
     void should_get_user_info_with_success() throws Exception {
 
         User user = User.builder()
@@ -61,7 +63,7 @@ class UserControllerTest {
     }
 
     @Test
-    @WithMockUser(username = "Mary", password = "4321")
+    @WithMockUser(roles = {"ADMIN"})
     void should_get_all_users_with_success() throws Exception {
 
         User john = User.builder()
