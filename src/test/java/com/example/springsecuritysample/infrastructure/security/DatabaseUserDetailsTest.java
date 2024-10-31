@@ -1,4 +1,4 @@
-package com.example.springsecuritysample.infrastructure;
+package com.example.springsecuritysample.infrastructure.security;
 
 import com.example.springsecuritysample.domain.Role;
 import com.example.springsecuritysample.domain.User;

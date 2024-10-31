@@ -1,4 +1,4 @@
-package com.example.springsecuritysample.infrastructure;
+package com.example.springsecuritysample.infrastructure.database;
 
 import org.springframework.data.repository.CrudRepository;
 
